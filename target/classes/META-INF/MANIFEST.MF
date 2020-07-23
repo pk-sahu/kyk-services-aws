@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Implementation-Title: kyk-services-aws
+Implementation-Version: 0.0.1-SNAPSHOT
+Built-By: prashant
+Implementation-Vendor-Id: com.sms
+Build-Jdk: 1.8.0_111
+Implementation-URL: https://projects.spring.io/spring-boot/#/spring-bo
+ ot-starter-parent/kyk-services-aws
+Created-By: Maven Integration for Eclipse
+
