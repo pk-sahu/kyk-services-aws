@@ -1,0 +1,116 @@
+.inputfield-height{
+  height:25px
+}
+
+div{
+  font-size: .8rem;
+}
+a.nav-link {
+  color : #ffffff;
+}
+.header{
+  top: 0;
+  width: 100%;
+  color : #ffffff;
+  background-color: #fd7e14;
+}
+.clear { clear: both; height: 60px; }
+.footer {
+  bottom: 0;
+  position:fixed;
+  width: 100%;
+  height: 40px;
+  color : #ffffff;
+  background-color: #fd7e14;
+  display: inline-block;
+}
+
+/* .App {
+  text-align: center;
+} */
+
+.App-logo {
+  animation: App-logo-spin infinite 20s linear;
+  height: 40vmin;
+  pointer-events: none;
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: white;
+}
+
+.PageSwitcher {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.PageSwitcher__Item {
+  background-color: #4C5D72;
+  color: #9DA6B1;
+  padding: 10px 25px;
+  cursor: pointer;
+  font-size: .9em;
+  border: none;
+  outline: none;
+  display: inline-block;
+  text-decoration: none;
+}
+
+.PageSwitcher__Item--Active {
+  background-color: #5ED0C0;
+  color: white;
+}
+
+.divider-text {
+    position: relative;
+    text-align: center;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+.divider-text span {
+    padding: 7px;
+    font-size: 12px;
+    position: relative;   
+    z-index: 2;
+}
+.divider-text:after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    border-bottom: 1px solid #ddd;
+    top: 55%;
+    left: 0;
+    z-index: 1;
+}
+
+.btn-facebook {
+    background-color: #405D9D;
+    color: #fff;
+}
+
+.row-space-session {
+  display: block;
+  padding: 10px;
+  margin-bottom: 100px; 
+  text-align: justify;
+} 
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

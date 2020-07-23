@@ -1,0 +1,46 @@
+{
+  "name": "kyk-app",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@material-ui/core": "^4.11.0",
+    "@tippy.js/react": "^3.1.1",
+    "axios": "^0.18.0",
+    "formik": "^1.5.1",
+    "jquery": "^3.5.1",
+    "material-table": "^1.64.0",
+    "material-ui": "^0.20.2",
+    "moment": "^2.24.0",
+    "node-sass": "^4.14.1",
+    "page-flip": "^1.1.0",
+    "react": "^16.8.4",
+    "react-color": "^2.18.1",
+    "react-countup": "^4.3.3",
+    "react-credit-cards": "^0.8.3",
+    "react-datepicker": "^3.0.0",
+    "react-dom": "^16.8.4",
+    "react-icons": "^3.10.0",
+    "react-idle-timer": "^4.2.12",
+    "react-modal": "^3.11.2",
+    "react-pageflip": "^0.1.4",
+    "react-player": "^2.3.1",
+    "react-router-dom": "^4.3.1",
+    "react-scripts": "2.1.8",
+    "react-toastify": "^6.0.5"
+  },
+  "scripts": {
+    "start": "PORT=4200 react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
+}
