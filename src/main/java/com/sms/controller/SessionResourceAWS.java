@@ -24,7 +24,7 @@ import com.sms.service.SessionServiceAWS;
 @CrossOrigin(origins="${client.url}")
 @RestController
 public class SessionResourceAWS {
-
+ 
 	@Autowired
 	private SessionServiceAWS sessionServiceAWS;
 	
@@ -63,7 +63,8 @@ public class SessionResourceAWS {
 	}
 	@PostMapping("/kyk/uploadSession")
 	public ResponseEntity<String> uploadSession(@RequestPart(value = "file") MultipartFile file){
-		String fileName = sessionServiceAWS.uploadSession(file);//"testing";//
+		System.out.println(".....uploadSession.....");
+		String fileName = sessionServiceAWS.uploadSession(file);
 		return new ResponseEntity<String>(fileName, HttpStatus.OK);
 	}
 }

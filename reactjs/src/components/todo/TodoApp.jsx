@@ -11,7 +11,9 @@ import HomeComponent from './HomeComponent.jsx'
 import UserComponent from './UserComponent.jsx'
 import SessionsComponent from './SessionsComponent.jsx'
 import SessionComponent from './SessionComponent.jsx'
-import GalleryComponent from './GalleryComponent.jsx'
+import GalleryViewComponent from './GalleryViewComponent.jsx'
+import GalleryEditComponent from './GalleryEditComponent.jsx'
+import GalleryGridComponent from './GalleryGridComponent.jsx'
 
 class TodoApp extends Component {
     render() {
@@ -24,13 +26,15 @@ class TodoApp extends Component {
                             <Route path="/" exact component={SigninComponent}/>
                             <Route path="/signin" component={SigninComponent}/>
                             <Route path="/logout" component={SignoutComponent}/>
+                            <Route path="/gallery" component={GalleryViewComponent}/>
                             <AuthenticatedRoute path="/sessions/:id" component={SessionComponent}/>
                             <AuthenticatedRoute path="/sessions" component={SessionsComponent}/>
                             <AuthenticatedRoute path="/home" component={HomeComponent}/>
                             <AuthenticatedRoute path="/users/:id" component={UserComponent}/>
                             <AuthenticatedRoute path="/users" component={UsersComponent}/>
-                            <AuthenticatedRoute path="/gallery" component={GalleryComponent}/>
-                            
+                            <AuthenticatedRoute path="/galleries/:id" component={GalleryEditComponent}/>
+                            <AuthenticatedRoute path="/galleries" component={GalleryGridComponent}/>
+                                                       
                             <Route component={ErrorComponent}/>
                         </Switch>
                         <div className="clear"></div>

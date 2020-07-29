@@ -106,6 +106,32 @@ a.nav-link {
   text-align: justify;
 } 
 
+.sub-menu{
+  position: absolute !important;
+  padding: 0.1rem !important;
+  font-size: 0.8rem !important;
+  min-width: 1rem !important;
+}
+.sub-menu-item{
+  color: #fff !important;
+  background-color: #fd7e14 !important;
+  border-top: solid 1px #fff !important;
+}
+.sub-menu-item:hover {
+  color: #0056b3 !important;
+  text-decoration: none !important;
+}
+
+.containerSlide {
+  width: 1000px;
+  margin: auto;
+  padding-bottom: 50px;
+}
+
+.containerSlide img {
+  height: 400px;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);

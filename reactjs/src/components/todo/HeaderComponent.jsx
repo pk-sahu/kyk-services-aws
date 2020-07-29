@@ -45,9 +45,56 @@ class HeaderComponent extends Component {
                     <div className="collapse navbar-collapse" id="collapsibleNavbar">
                         <ul className="navbar-nav">
                             {isUserLoggedIn && <li><Link className="nav-link" to="/home">Home</Link></li>}
-                            {isUserLoggedIn && isAdmin && <li><Link className="nav-link" to="/users">Users</Link></li>}
-                            {isUserLoggedIn && isAdmin && <li><Link className="nav-link" to="/sessions">Sessions</Link></li>}
-                            {isUserLoggedIn && <li><Link className="nav-link" to="/gallery">Gallery</Link></li>}
+                            {isUserLoggedIn && isAdmin && 
+                                <li className="nav-item dropdown">
+                                    <Link className="nav-link dropdown-toggle" to="" 
+                                          data-toggle="dropdown" aria-haspopup="true" 
+                                          aria-expanded="false">Users</Link>
+                                    <div class="dropdown-menu sub-menu" 
+                                         aria-labelledby="navbarDropdownMenuLink">
+                                        {isUserLoggedIn && isAdmin && 
+                                            <Link className="dropdown-item sub-menu-item" 
+                                              to="/users">Edit/Delete</Link>}
+                                        {isUserLoggedIn && isAdmin && 
+                                        <Link className="dropdown-item sub-menu-item" 
+                                                to="/users/-1">Add</Link>}
+                                    </div>
+                                </li>
+                            }
+                            {isUserLoggedIn && isAdmin && 
+                                <li className="nav-item dropdown">
+                                    <Link className="nav-link dropdown-toggle" to="" 
+                                          data-toggle="dropdown" aria-haspopup="true" 
+                                          aria-expanded="false">Sessions</Link>
+                                    <div class="dropdown-menu sub-menu" 
+                                         aria-labelledby="navbarDropdownMenuLink">
+                                        {isUserLoggedIn && isAdmin && 
+                                            <Link className="dropdown-item sub-menu-item" 
+                                              to="/sessions">Edit/Delete</Link>}
+                                        {isUserLoggedIn && isAdmin && 
+                                        <Link className="dropdown-item sub-menu-item" 
+                                                to="/sessions/-1">Add</Link>}
+                                    </div>
+                                </li>
+                            }
+                            {isUserLoggedIn && 
+                                <li className="nav-item dropdown">
+                                    <Link className="nav-link dropdown-toggle" to="" 
+                                          data-toggle="dropdown" aria-haspopup="true" 
+                                          aria-expanded="false">Gallery</Link>
+                                    <div class="dropdown-menu sub-menu" 
+                                         aria-labelledby="navbarDropdownMenuLink">
+                                        {isUserLoggedIn && isAdmin && 
+                                            <Link className="dropdown-item sub-menu-item" 
+                                              to="/galleries">Edit/Delete</Link>}
+                                        {isUserLoggedIn && isAdmin && 
+                                        <Link className="dropdown-item sub-menu-item" 
+                                                to="/galleries/-1">Add</Link>}
+                                        <Link className="dropdown-item sub-menu-item" 
+                                                to="/gallery">View</Link>
+                                    </div>
+                                </li>
+                            }
                         </ul>
                         <ul className="navbar-nav navbar-collapse justify-content-end">
                             {!isUserLoggedIn && <li><Link className="nav-link" to="/signin">Sign In</Link></li>}
