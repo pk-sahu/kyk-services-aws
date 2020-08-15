@@ -41,4 +41,9 @@ public class UserServiceAWS {
 		UserInfoAWS userInfo = userRepository.getActiveUser(username);
 		return userInfo.getRole();
 	}
+	
+	public String getFullUsername(String username) {
+		UserInfoAWS userInfo = userRepository.getActiveUser(username);
+		return userInfo.getStudentname();
+	}
 }

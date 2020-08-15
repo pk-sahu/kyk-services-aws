@@ -6,6 +6,9 @@ class UserDataService {
     getUserDetail(name) {
         return axios.get(`${API_URL}/kyk/users/detail/${name}`);
     }
+    getFullUsername(name) {
+        return axios.get(`${API_URL}/kyk/users/fullusername/${name}`);
+    }
     getAllUsers() {
         return axios.get(`${API_URL}/kyk/users/getallusers`);
     }

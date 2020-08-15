@@ -44,13 +44,31 @@ class HeaderComponent extends Component {
                     </button>
                     <div className="collapse navbar-collapse" id="collapsibleNavbar">
                         <ul className="navbar-nav">
-                            {isUserLoggedIn && <li><Link className="nav-link" to="/home">Home</Link></li>}
+                            {isUserLoggedIn && <li><Link className="nav-link" to="/home" >Home</Link></li>}
+                            {isUserLoggedIn && 
+                                <li className="nav-item dropdown">
+                                    <Link className="nav-link dropdown-toggle" to="" 
+                                          data-toggle="dropdown" aria-haspopup="true" 
+                                          aria-expanded="false">Worksheet</Link>
+                                    <div className="dropdown-menu sub-menu" 
+                                         aria-labelledby="navbarDropdownMenuLink">
+                                        {isUserLoggedIn && isAdmin && 
+                                            <Link className="dropdown-item sub-menu-item" 
+                                              to="/worksheets">Edit/Delete</Link>}
+                                        {isUserLoggedIn && isAdmin && 
+                                        <Link className="dropdown-item sub-menu-item" 
+                                                to="/worksheets/-1">Add</Link>}
+                                        <Link className="dropdown-item sub-menu-item" 
+                                                to="/worksheet">View</Link>
+                                    </div>
+                                </li>
+                            }
                             {isUserLoggedIn && isAdmin && 
                                 <li className="nav-item dropdown">
                                     <Link className="nav-link dropdown-toggle" to="" 
                                           data-toggle="dropdown" aria-haspopup="true" 
                                           aria-expanded="false">Users</Link>
-                                    <div class="dropdown-menu sub-menu" 
+                                    <div className="dropdown-menu sub-menu" 
                                          aria-labelledby="navbarDropdownMenuLink">
                                         {isUserLoggedIn && isAdmin && 
                                             <Link className="dropdown-item sub-menu-item" 
@@ -61,12 +79,12 @@ class HeaderComponent extends Component {
                                     </div>
                                 </li>
                             }
-                            {isUserLoggedIn && isAdmin && 
+                            {isUserLoggedIn && 
                                 <li className="nav-item dropdown">
                                     <Link className="nav-link dropdown-toggle" to="" 
                                           data-toggle="dropdown" aria-haspopup="true" 
-                                          aria-expanded="false">Sessions</Link>
-                                    <div class="dropdown-menu sub-menu" 
+                                          aria-expanded="false">Assignments</Link>
+                                    <div className="dropdown-menu sub-menu" 
                                          aria-labelledby="navbarDropdownMenuLink">
                                         {isUserLoggedIn && isAdmin && 
                                             <Link className="dropdown-item sub-menu-item" 
@@ -74,6 +92,8 @@ class HeaderComponent extends Component {
                                         {isUserLoggedIn && isAdmin && 
                                         <Link className="dropdown-item sub-menu-item" 
                                                 to="/sessions/-1">Add</Link>}
+                                        <Link className="dropdown-item sub-menu-item" 
+                                                to="/assignment">View</Link>
                                     </div>
                                 </li>
                             }
@@ -82,7 +102,7 @@ class HeaderComponent extends Component {
                                     <Link className="nav-link dropdown-toggle" to="" 
                                           data-toggle="dropdown" aria-haspopup="true" 
                                           aria-expanded="false">Gallery</Link>
-                                    <div class="dropdown-menu sub-menu" 
+                                    <div className="dropdown-menu sub-menu" 
                                          aria-labelledby="navbarDropdownMenuLink">
                                         {isUserLoggedIn && isAdmin && 
                                             <Link className="dropdown-item sub-menu-item" 
@@ -95,6 +115,7 @@ class HeaderComponent extends Component {
                                     </div>
                                 </li>
                             }
+                            {isUserLoggedIn && <li><Link className="nav-link" to="/contactus" >Contact Us</Link></li>}
                         </ul>
                         <ul className="navbar-nav navbar-collapse justify-content-end">
                             {!isUserLoggedIn && <li><Link className="nav-link" to="/signin">Sign In</Link></li>}

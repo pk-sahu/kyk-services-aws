@@ -31,7 +31,10 @@ public class UserResourceAWS {
 	public String getUserDetail(@PathVariable String username){
 		return userService.getUserDetail(username);
 	}
-	
+	@GetMapping("/kyk/users/fullusername/{username}")
+	public String getFullUsername(@PathVariable String username){
+		return userService.getFullUsername(username);
+	}	
 	@GetMapping("/kyk/users/getallusers")
 	public List<UserInfoAWS> getAllUsers(){
 		return userService.getAllUsers();

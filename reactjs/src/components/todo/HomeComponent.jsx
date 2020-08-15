@@ -1,94 +1,53 @@
 import React, { Component } from 'react'
-import SessionDataService from '../../api/todo/SessionDataService.js'
-import { USER_NAME_SESSION_ATTRIBUTE_NAME } from '../../Constants.js'
+import { USER_NAME_SESSION_ATTRIBUTE_NAME } from '../../Constants';
+import UserDataService from '../../api/todo/UserDataService';
 
 class HomeComponent extends Component {
 
     constructor(props) {
         super(props)
         this.state = {
-            sessions: [],
-            filterSessions: []
+            fullusername: ''
         }
-        this.refreshSessions = this.refreshSessions.bind(this)
-        this.hello = this.hello.bind(this)
-    }
-
-    componentDidMount() {
-        this.refreshSessions();
-    }
-    refreshSessions() {
-        let user = sessionStorage.getItem(USER_NAME_SESSION_ATTRIBUTE_NAME)
-        SessionDataService.getSessionForUser(user)
-        .then(response => {
-            this.setState({sessions: response.data})                    
-        })
-    }
-    hello(filteredDate){
-        this.setState({ filterSessions: this.state.sessions.filter(session => session.visibleDate === filteredDate) })
-        this.props.history.push(`/home`)
     }
     
+    componentDidMount = async (data) => {
+        let user = sessionStorage.getItem(USER_NAME_SESSION_ATTRIBUTE_NAME)
+        await UserDataService.getFullUsername(user)
+        .then(response => {
+            this.setState({
+                fullusername: response.data
+            }, () => {data = response.data;})                    
+        }).catch(error => {            
+        });
+        this.setState({
+            fullusername: data
+        });
+    }
     render() {
-        
         return (
-            <div className="container" style={{width: '85%'}}>
-                <h5 className="card-title mt-3 text-center">Watch Home Assignment</h5>
-                <div className="row">
-                <div className="col-sm-2">
-                    Home Assignment Dates:<br />
-                    {   
-                        [...new Set(this.state.sessions.map(x => x.visibleDate ))]
-                            .map(filteredDate => (
-                            <a key={filteredDate} href="#" onClick={()=>this.hello(filteredDate)}>
-                                <i className="fas fa-calendar" style={{ color: 'blue' }}></i>
-                                &nbsp;&nbsp;{filteredDate}<br />
-                            </a>
-                        ))
-                    }
-                </div>
-                <div className="col-sm-5">
-                {
-                    this.state.filterSessions.map((session, index) => {
-                        if(index % 2 == 0)                        
-                        return <div key={session.id} className="card mt-4" style={{width: '20rem'}}>
-                            <div className="card-body">
-                                <h6 className="card-title">
-                                    <strong>{session.subject}</strong>: {session.description}<br/>
-                                    <strong>Class</strong>: {session.classname}
-                                </h6>
-                                <video width='300px' height='120px' controls>
-                                    <source src={session.fileName} />    
-                                </video> 
-                            </div><br />
+            <div className="card-body text-center">
+                <div className="card-body text-center">
+                    <div className="card text-white bg-success mb-4">
+                        <div className="card-body">
+                            <h5 className="card-title"> Welcome {this.state.fullusername} </h5>
+                            <p className="text-left">HELLO KIDS LITTLE WORLD pre-school is a place where children can grow and 
+                            develop while reading, writing, listening and playing to achieve the best education 
+                            standards, we build a balance plateform between the Eastern culture and western competitive 
+                            standards which will prepare a winning generation for the 21st century. Our children will 
+                            grow up to be accommodative, caring, sharing and bright individuals. </p>
+                            <p className="text-left">We have introduced eLearning @HelloKids LittleWorld for preschoolers 
+                            where parents can get their child Engaged, Interact, Learn online/offline all from 
+                            the comfort & safety at the home.</p>
+                            <p className="text-left">We are providing content based learning, Now parents/kids 
+                            can see the recorded content for home assignment.</p>
+                            <p className="text-left">We are also providing  Worksheets for kids, Parents can download 
+                            and take printouts for kids activities.</p>
                         </div>
-                    }
-                    )
-                }
-                </div>
-                <div className="col-sm-5">
-                {
-                    this.state.filterSessions.map((session, index) => {
-                        if(index % 2 != 0)                        
-                        return <div key={session.id} className="card mt-4" style={{width: '20rem'}}>
-                            <div className="card-body">
-                                <h6 className="card-title">
-                                    <strong>{session.subject}</strong>: {session.description}<br />
-                                    <strong>Class</strong>: {session.classname}
-                                </h6>
-                                <video width='300px' height='120px' controls>
-                                    <source src={session.fileName} />    
-                                </video> 
-                            </div><br />
-                        </div>
-                    }
-                    )
-                }
-                </div>
+                    </div>
                 </div>
             </div>
         )
     }
 }
-
 export default HomeComponent

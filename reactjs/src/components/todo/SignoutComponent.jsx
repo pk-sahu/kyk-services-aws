@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
-import { USER_ROLE } from '../../Constants';
+import { USER_ROLE, USER_NAME_SESSION_ATTRIBUTE_NAME } from '../../Constants';
 
 class SignoutComponent extends Component {
 
     render() {
         sessionStorage.removeItem(USER_ROLE);
+        sessionStorage.removeItem(USER_NAME_SESSION_ATTRIBUTE_NAME);
         return (
             <div className="card-body text-center">
                 <div className="card-body text-center">

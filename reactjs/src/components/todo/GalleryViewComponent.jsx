@@ -10,7 +10,7 @@ class GalleryViewComponent extends Component {
             filterSessions: []
         }
         this.refreshSessions = this.refreshSessions.bind(this)
-        this.hello = this.hello.bind(this)
+        this.handleChange = this.handleChange.bind(this)
     }
 
     componentDidMount() {
@@ -22,7 +22,9 @@ class GalleryViewComponent extends Component {
             this.setState({sessions: response.data})                    
         })
     }
-    hello(filteredDate){
+    
+    handleChange(event) {
+        let filteredDate = event.target.value;
         this.setState({ filterSessions: this.state.sessions.filter(session => session.albumdate === filteredDate) })
         this.props.history.push(`/gallery`)
     }
@@ -34,20 +36,21 @@ class GalleryViewComponent extends Component {
                 <div className="row">
                 <div className="col-sm-2">
                     Album's Date:<br />
+                    <select className="browser-default custom-select"
+                            onChange={this.handleChange}>
+                        <option disabled selected hidden>Please select !</option>
                     {   
                         [...new Set(this.state.sessions.map(x => x.albumdate ))]
-                            .map(filteredDate => (
-                            <a key={filteredDate} href="#" onClick={()=>this.hello(filteredDate)}>
-                                <i className="fas fa-calendar" style={{ color: 'blue' }}></i>
-                                &nbsp;&nbsp;{filteredDate}<br />
-                            </a>
+                            .map((filteredDate,index) => (
+                            <option key={index}>{filteredDate}</option>
                         ))
                     }
+                    </select>
                 </div>
                 <div className="col-sm-5">
                 {   
                     this.state.filterSessions.map((session, index) => {
-                        if(index % 2 == 0){ 
+                        if(index % 2 === 0){ 
                             if(session.filetype === 'mp4')
                             return <div key={session.id} className="card mt-4 containerSlide">
                                 <div className="card-body">
@@ -76,7 +79,7 @@ class GalleryViewComponent extends Component {
                 <div className="col-sm-5">
                 {   
                     this.state.filterSessions.map((session, index) => {
-                        if(index % 2 != 0) 
+                        if(index % 2 !== 0) 
                             if(session.filetype === 'mp4')
                             return <div key={session.id} className="card mt-4 containerSlide">
                                 <div className="card-body">
