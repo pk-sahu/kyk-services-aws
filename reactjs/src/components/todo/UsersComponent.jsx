@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import UserDataService from '../../api/todo/UserDataService.js'
 import MaterialTable from 'material-table';
+import { USER_NAME_SESSION_ATTRIBUTE_NAME } from '../../Constants.js';
 
 class UsersComponent extends Component {
     constructor(props) {
@@ -32,11 +33,11 @@ class UsersComponent extends Component {
             )
     }
 
-    deleteUserClicked(id) {
+    deleteUserClicked(id, username) {
         UserDataService.deleteUser(id)
             .then(
                 response => {
-                    this.setState({ message: `Delete of User ${id} Successful` })
+                    this.setState({ message: `User ${username} has been deleted Successfully.` })
                     this.refreshUsers()
                 }
             )
@@ -52,6 +53,24 @@ class UsersComponent extends Component {
     }
 
     render() {
+        let currentUser = sessionStorage.getItem(USER_NAME_SESSION_ATTRIBUTE_NAME)
+        if(currentUser === 'cpsclass1')
+            this.state.users =  this.state.users.filter(user => user.classname === 'Class 1')
+        if(currentUser === 'cpsclass2')
+            this.state.users =  this.state.users.filter(user => user.classname === 'Class 2')
+        if(currentUser === 'cpsclass3')
+            this.state.users =  this.state.users.filter(user => user.classname === 'Class 3')
+        if(currentUser === 'cpsclass4')
+            this.state.users =  this.state.users.filter(user => user.classname === 'Class 4')
+        if(currentUser === 'cpsclass5')
+            this.state.users =  this.state.users.filter(user => user.classname === 'Class 5')
+        if(currentUser === 'cpsclass6')
+            this.state.users =  this.state.users.filter(user => user.classname === 'Class 6')
+        if(currentUser === 'cpsclass7')
+            this.state.users =  this.state.users.filter(user => user.classname === 'Class 7')
+        if(currentUser === 'cpsclass8')
+            this.state.users =  this.state.users.filter(user => user.classname === 'Class 8')
+        
         return (
             <div >
                 <div className="container" style={{width: '75%'}}>
@@ -65,6 +84,7 @@ class UsersComponent extends Component {
                         { title: 'Phone', field: 'phone' },
                         { title: 'Date Of Birth', field: 'dateofbirth' },
                         { title: 'Email', field: 'email' },
+                        { title: 'User Active', field: 'userstatus' },
                     ]}
                     data={this.state.users}
                     title="User's List" 
@@ -77,7 +97,7 @@ class UsersComponent extends Component {
                         {
                         icon: 'delete',
                         tooltip: 'Delete User',
-                        onClick: (event, rowData) => this.deleteUserClicked(rowData.id)
+                        onClick: (event, rowData) => this.deleteUserClicked(rowData.id, rowData.username)
                         }
                     ]}
                     options={{

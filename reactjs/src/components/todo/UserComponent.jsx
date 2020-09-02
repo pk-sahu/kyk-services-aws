@@ -1,19 +1,23 @@
 import React, { Component } from 'react'
 import moment from 'moment'
 import UserDataService from '../../api/todo/UserDataService.js'
+import { toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+import { USER_NAME_SESSION_ATTRIBUTE_NAME, SCHOOL_ADMIN } from '../../Constants.js'
 
 class UserComponent extends Component {
     constructor(props) {
         super(props)
-
+        toast.configure()
         this.state = {
             id: this.props.match.params.id,
             username: '',
             plainpassword: '',
             phone: '',
             studentname: '',
-            classname: 'Nursery',
+            classname: '',
             email: '',
+            userstatus: 'true',
             dateofbirth: moment(new Date()).format('YYYY-MM-DD'),
             errors:{
                 username: "",
@@ -26,6 +30,7 @@ class UserComponent extends Component {
 
         this.onSubmit = this.onSubmit.bind(this)
         this.handleChange = this.handleChange.bind(this)
+        this.setUserStatus = this.setUserStatus.bind(this)
     }
 
     componentDidMount() {
@@ -42,6 +47,7 @@ class UserComponent extends Component {
                 classname: response.data.classname,
                 phone: response.data.phone,
                 email: response.data.email,
+                userstatus: response.data.userstatus,
                 dateofbirth: moment(response.data.dateofbirth).format('YYYY-MM-DD')
             }))
     }
@@ -67,6 +73,9 @@ class UserComponent extends Component {
             case "email":
                 errors.email = !value ? "Please enter email." : "";
                 break;
+            case "classname":
+                errors.classname = !value ? "Please select class..." : "";
+                break;
             default:
                 break;
         }
@@ -74,6 +83,9 @@ class UserComponent extends Component {
         this.setState({
             [event.target.name]: event.target.value
         })                
+    }
+    setUserStatus(event) {
+        this.setState({ userstatus: event.target.value })
     }
     onSubmit() {
         
@@ -85,7 +97,28 @@ class UserComponent extends Component {
             studentname: this.state.studentname,
             email: this.state.email,
             classname: this.state.classname,
-            dateofbirth: this.state.dateofbirth
+            dateofbirth: this.state.dateofbirth,
+            userstatus: this.state.userstatus,
+        }
+        
+        if (!this.state.username){
+            toast.error('Please enter user name.', { position: toast.POSITION.TOP_RIGHT })
+            return;
+        }else if (!this.state.plainpassword){
+            toast.error('Please enter password.', { position: toast.POSITION.TOP_RIGHT })
+            return;
+        }else if (!this.state.phone){
+            toast.error('Please enter phone number.', { position: toast.POSITION.TOP_RIGHT })
+            return;
+        }else if (!this.state.studentname){
+            toast.error('Please enter student name.', { position: toast.POSITION.TOP_RIGHT })
+            return;
+        }else if (!this.state.email){
+            toast.error('Please enter email.', { position: toast.POSITION.TOP_RIGHT })
+            return;
+        }else if (!this.state.classname){
+            toast.error('Please select class.', { position: toast.POSITION.TOP_RIGHT })
+            return;
         }
 
         if (this.state.id === "-1") {
@@ -98,6 +131,18 @@ class UserComponent extends Component {
     }
 
     render() {
+        const Statuscomponent = () => ( 
+            <div className="form-group input-group" onChange={this.setUserStatus}>
+              <div className="input-group-prepend"> 
+                <input type="radio" value='true' name="userstatus" 
+                        defaultChecked={'true' === this.state.userstatus} /> Active&nbsp;&nbsp;
+                <input type="radio" value='false' name="userstatus" 
+                        defaultChecked={'true' !== this.state.userstatus} /> Inactive
+              </div>
+            </div>
+        );
+        const currentUser = sessionStorage.getItem(USER_NAME_SESSION_ATTRIBUTE_NAME);
+        
         return (
             <div className="container" style={{width: '75%'}}>
                 <h5 className="card-title mt-3 text-center">Create User's Account</h5>
@@ -136,12 +181,31 @@ class UserComponent extends Component {
                         <select className="browser-default custom-select"
                                 value={this.state.classname} 
                                 name="classname" onChange={this.handleChange} >
-                            <option value="Nursery">Nursery</option>
-                            <option value="Junior KG">Junior KG</option>
-                            <option value="Senior KG">Senior KG</option>
+                                <option value="" selected="selected">Please select class...</option>
+{currentUser === 'cpsclass1' && <option value="Class 1">Class 1</option>}
+{currentUser === 'cpsclass2' && <option value="Class 2">Class 2</option>}
+{currentUser === 'cpsclass3' && <option value="Class 3">Class 3</option>}
+{currentUser === 'cpsclass4' && <option value="Class 4">Class 4</option>}
+{currentUser === 'cpsclass5' && <option value="Class 5">Class 5</option>}
+{currentUser === 'cpsclass6' && <option value="Class 6">Class 6</option>}
+{currentUser === 'cpsclass7' && <option value="Class 7">Class 7</option>}
+{currentUser === 'cpsclass8' && <option value="Class 8">Class 8</option>}    
+{currentUser === SCHOOL_ADMIN && <option value="Nursery">Nursery</option>}
+{currentUser === SCHOOL_ADMIN && <option value="Junior KG">Junior KG</option>}
+{currentUser === SCHOOL_ADMIN && <option value="Senior KG">Senior KG</option>}            
+{currentUser === SCHOOL_ADMIN && <option value="Class 1">Class 1</option>}
+{currentUser === SCHOOL_ADMIN && <option value="Class 2">Class 2</option>}
+{currentUser === SCHOOL_ADMIN && <option value="Class 3">Class 3</option>}
+{currentUser === SCHOOL_ADMIN && <option value="Class 4">Class 4</option>}
+{currentUser === SCHOOL_ADMIN && <option value="Class 5">Class 5</option>}
+{currentUser === SCHOOL_ADMIN && <option value="Class 6">Class 6</option>}
+{currentUser === SCHOOL_ADMIN && <option value="Class 7">Class 7</option>}
+{currentUser === SCHOOL_ADMIN && <option value="Class 8">Class 8</option>}
+
                         </select>
                     </div>
                 </div>
+                {this.state.errors.classname && <div className="alert alert-warning">{this.state.errors.classname}</div>}
                 Phone:
                 <div className="form-group input-group">
                     <div className="input-group-prepend">
@@ -170,6 +234,8 @@ class UserComponent extends Component {
                         value={this.state.dateofbirth} onChange={this.handleChange}/>
                     </div>
                 </div>
+                User Status:
+                <Statuscomponent />
                 <button className="btn btn-success" 
                         type="button" 
                         onClick={this.onSubmit}>Save</button>

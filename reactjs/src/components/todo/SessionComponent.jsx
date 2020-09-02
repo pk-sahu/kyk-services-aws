@@ -3,6 +3,7 @@ import moment from 'moment'
 import SessionDataService from '../../api/todo/SessionDataService.js'
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import { USER_NAME_SESSION_ATTRIBUTE_NAME, SCHOOL_ADMIN } from '../../Constants.js'
 
 class SessionComponent extends Component {
     constructor(props) {
@@ -11,7 +12,7 @@ class SessionComponent extends Component {
         this.state = {
             id: this.props.match.params.id,
             subject: '',
-            classname: 'Nursery',
+            classname: '',
             description: '',
             visibleDate: moment(new Date()).format('YYYY-MM-DD'),
             fileName: '',
@@ -45,6 +46,9 @@ class SessionComponent extends Component {
                 break;
             case "fileName":
                 errors.fileName = !value ? "Please upload session." : "";
+                break;
+            case "classname":
+                errors.classname = !value ? "Please select class..." : "";
                 break;
             default:
                 break;
@@ -98,7 +102,10 @@ class SessionComponent extends Component {
             toast.error('Please enter subject.', { position: toast.POSITION.TOP_RIGHT })
             return
         }
-        
+        if (!this.state.classname){
+            toast.error('Please select class.', { position: toast.POSITION.TOP_RIGHT })
+            return;
+        }        
         if (!this.state.description){
             toast.error('Please enter description.', { position: toast.POSITION.TOP_RIGHT })
             return
@@ -118,6 +125,15 @@ class SessionComponent extends Component {
     }
 
     onFileChange = event => { 
+        let errors = this.state.errors;
+        let fileSize = event.target.files[0].size / 1000 / 1000; 
+        if (fileSize > 50){
+            this.setState({isUpload: false });
+            errors.fileName = "Please upload file with maximum size of 50 MB.";
+            return;
+        }else{
+            errors.fileName = "";
+        }
         this.setState({selectedFile:event.target.files[0], isUpload: true });
     }; 
 
@@ -137,7 +153,7 @@ class SessionComponent extends Component {
     }; 
 
     render() {
-
+        const currentUser = sessionStorage.getItem(USER_NAME_SESSION_ATTRIBUTE_NAME);
         return (
             <div className="container" style={{width: '75%'}}>
                 <h5 className="card-title mt-3 text-center">Add Session</h5>
@@ -157,12 +173,30 @@ class SessionComponent extends Component {
                         <select className="browser-default custom-select"
                                 value={this.state.classname} 
                                 name="classname" onChange={this.handleChange} >
-                            <option value="Nursery">Nursery</option>
-                            <option value="Junior KG">Junior KG</option>
-                            <option value="Senior KG">Senior KG</option>
+                                <option value="" selected="selected">Please select class...</option>
+{currentUser === 'cpsclass1' && <option value="Class 1">Class 1</option>}
+{currentUser === 'cpsclass2' && <option value="Class 2">Class 2</option>}
+{currentUser === 'cpsclass3' && <option value="Class 3">Class 3</option>}
+{currentUser === 'cpsclass4' && <option value="Class 4">Class 4</option>}
+{currentUser === 'cpsclass5' && <option value="Class 5">Class 5</option>}
+{currentUser === 'cpsclass6' && <option value="Class 6">Class 6</option>}
+{currentUser === 'cpsclass7' && <option value="Class 7">Class 7</option>}
+{currentUser === 'cpsclass8' && <option value="Class 8">Class 8</option>}    
+{currentUser === SCHOOL_ADMIN && <option value="Nursery">Nursery</option>}
+{currentUser === SCHOOL_ADMIN && <option value="Junior KG">Junior KG</option>}
+{currentUser === SCHOOL_ADMIN && <option value="Senior KG">Senior KG</option>}            
+{currentUser === SCHOOL_ADMIN && <option value="Class 1">Class 1</option>}
+{currentUser === SCHOOL_ADMIN && <option value="Class 2">Class 2</option>}
+{currentUser === SCHOOL_ADMIN && <option value="Class 3">Class 3</option>}
+{currentUser === SCHOOL_ADMIN && <option value="Class 4">Class 4</option>}
+{currentUser === SCHOOL_ADMIN && <option value="Class 5">Class 5</option>}
+{currentUser === SCHOOL_ADMIN && <option value="Class 6">Class 6</option>}
+{currentUser === SCHOOL_ADMIN && <option value="Class 7">Class 7</option>}
+{currentUser === SCHOOL_ADMIN && <option value="Class 8">Class 8</option>}
                         </select>
                     </div>
                 </div>
+                {this.state.errors.classname && <div className="alert alert-warning">{this.state.errors.classname}</div>}
                 Description:
                 <div className="form-group input-group">
                     <div className="input-group-prepend">

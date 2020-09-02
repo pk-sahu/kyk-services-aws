@@ -44,8 +44,8 @@ public class UserInfoAWS {
 	@DynamoDBAttribute(attributeName = "role")
 	private String role = "ROLE_USER";
 	
-	@DynamoDBAttribute(attributeName = "enabled")
-	private int enabled = 1;
+	@DynamoDBAttribute(attributeName = "userstatus")
+	private String userstatus = "";
 	
 	public String getUsername() {
 		return username;
@@ -119,12 +119,12 @@ public class UserInfoAWS {
 		this.role = role;
 	}
 
-	public int getEnabled() {
-		return enabled;
+	public String getUserstatus() {
+		return userstatus;
 	}
 
-	public void setEnabled(int enabled) {
-		this.enabled = enabled;
+	public void setUserstatus(String userstatus) {
+		this.userstatus = userstatus;
 	}
 
 	public String getId() {

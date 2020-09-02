@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.sms.vo.JwtRequest;
 import com.sms.vo.JwtResponse;
+import com.sms.dao.UserDaoAWS;
+import com.sms.model.UserInfoAWS;
 import com.sms.service.UserDetailsServiceImpl;
 import com.sms.util.JwtTokenUtil;
 
@@ -31,6 +33,9 @@ public class AuthenticationController {
 
 	@Autowired
 	private UserDetailsServiceImpl userDetailsService;
+	
+	@Autowired
+	private UserDaoAWS userRepository;
 
 	@RequestMapping(value = "/authenticate", method = RequestMethod.POST)
 	public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest) throws Exception {
@@ -40,7 +45,13 @@ public class AuthenticationController {
 		final UserDetails userDetails = userDetailsService
 				.loadUserByUsername(authenticationRequest.getUsername());
 
-		final String token = jwtTokenUtil.generateToken(userDetails);
+		String token = jwtTokenUtil.generateToken(userDetails);
+		
+		UserInfoAWS userInfo = userRepository.getActiveUser(authenticationRequest.getUsername());
+
+		if("false".equalsIgnoreCase(userInfo.getUserstatus())) {
+			token = userInfo.getUserstatus();
+		}
 
 		return ResponseEntity.ok(new JwtResponse(token));
 	}

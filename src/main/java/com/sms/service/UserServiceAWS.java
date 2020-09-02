@@ -37,9 +37,9 @@ public class UserServiceAWS {
 		userRepository.deleteById(id);
 	}
 
-	public String getUserDetail(String username) {
+	public UserInfoAWS getUserDetail(String username) {
 		UserInfoAWS userInfo = userRepository.getActiveUser(username);
-		return userInfo.getRole();
+		return userInfo;
 	}
 	
 	public String getFullUsername(String username) {

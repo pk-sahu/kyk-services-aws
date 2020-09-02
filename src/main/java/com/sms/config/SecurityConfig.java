@@ -3,10 +3,12 @@ package com.sms.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -81,13 +83,28 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and();
 		
 		http.authorizeRequests().antMatchers("/kyk/authenticate").permitAll()
-								//.antMatchers("/kyk/**").authenticated();
-								.antMatchers("/kyk/**").permitAll();
+								.antMatchers("/kyk/**").authenticated();
+								//.antMatchers("/kyk/**").permitAll();
 		http.headers().cacheControl();
 		
 		http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
 	}
-	
+	@Override
+    public void configure(WebSecurity webSecurity) throws Exception {
+        webSecurity
+            .ignoring()
+            .antMatchers(
+                HttpMethod.POST,
+                "/kyk/authenticate"
+            )
+            .antMatchers(HttpMethod.OPTIONS, "/**")
+            .and()
+            .ignoring()
+            .antMatchers(
+                HttpMethod.GET,
+                "/" //Other Stuff You want to Ignore
+            );
+    }
 	@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception{
 		auth.userDetailsService(userDetailsServiceImpl).passwordEncoder(passwordEncoder());

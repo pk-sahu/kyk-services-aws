@@ -99,6 +99,15 @@ class GalleryEditComponent extends Component {
     }
 
     onFileChange = event => { 
+        let errors = this.state.errors;
+        let fileSize = event.target.files[0].size / 1000 / 1000; 
+        if (fileSize > 50){
+            this.setState({isUpload: false });
+            errors.fileName = "Please upload file with maximum size of 50 MB.";
+            return;
+        }else{
+            errors.fileName = "";
+        }
         this.setState({selectedFile:event.target.files[0], isUpload: true });
     }; 
 

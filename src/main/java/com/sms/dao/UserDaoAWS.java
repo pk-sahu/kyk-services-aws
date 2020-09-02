@@ -79,6 +79,7 @@ public class UserDaoAWS {
 		attributeNames.put("#email", "email");
 		attributeNames.put("#phone", "phone");
 		attributeNames.put("#dateofbirth", "dateofbirth");
+		attributeNames.put("#userstatus", "userstatus");
 		
 		Map<String, Object> attributeValues = new HashMap<String, Object>();
 		attributeValues.put(":username", userInfoAWS.getUsername()); 
@@ -88,10 +89,11 @@ public class UserDaoAWS {
 		attributeValues.put(":studentname", userInfoAWS.getStudentname());
 		attributeValues.put(":classname", userInfoAWS.getClassname());
 		attributeValues.put(":email", userInfoAWS.getEmail());  
-		attributeValues.put(":dateofbirth", userInfoAWS.getDateofbirth());  
+		attributeValues.put(":dateofbirth", userInfoAWS.getDateofbirth());
+		attributeValues.put(":userstatus", userInfoAWS.getUserstatus()); 
 		
 		String updateExpression = "set #username=:username, #plainpassword=:plainpassword, #password=:password, "
-				+ "#phone=:phone, #dateofbirth=:dateofbirth, #studentname=:studentname, "
+				+ "#phone=:phone, #dateofbirth=:dateofbirth, #studentname=:studentname, #userstatus=:userstatus, "
 				+ "#classname=:classname, #email=:email";
 		
 		UpdateItemOutcome outcome = table.updateItem(
@@ -125,11 +127,11 @@ public class UserDaoAWS {
 	
 	public UserInfoAWS getActiveUser(String userName) {
 		Map<String, AttributeValue> expressionAttributeValues = new HashMap<String, AttributeValue>();
-    	expressionAttributeValues.put(":val", new AttributeValue().withS(userName)); 
+    	expressionAttributeValues.put(":username", new AttributeValue().withS(userName)); 
     	        
     	ScanRequest scanRequest = new ScanRequest()
     	    .withTableName(userTableName)
-    	    .withFilterExpression("username = :val")
+    	    .withFilterExpression("username = :username")
     	    .withExpressionAttributeValues(expressionAttributeValues);
 
     	ScanResult result = amazonDynamoDB.scan(scanRequest);
@@ -141,11 +143,11 @@ public class UserDaoAWS {
 	
 	public UserInfoAWS getUserDetail(String userName) {
 		Map<String, AttributeValue> expressionAttributeValues = new HashMap<String, AttributeValue>();
-    	expressionAttributeValues.put(":val", new AttributeValue().withS(userName)); 
+    	expressionAttributeValues.put(":username", new AttributeValue().withS(userName)); 
     	        
     	ScanRequest scanRequest = new ScanRequest()
     	    .withTableName(userTableName)
-    	    .withFilterExpression("username = :val")
+    	    .withFilterExpression("username = :username")
     	    .withExpressionAttributeValues(expressionAttributeValues);
 
     	ScanResult result = amazonDynamoDB.scan(scanRequest);
@@ -167,7 +169,7 @@ public class UserDaoAWS {
 		userInfoAWS.setClassname(item.get("classname").getS());
 		userInfoAWS.setEmail(item.get("email").getS());
 		userInfoAWS.setRole(item.get("role").getS());
-		userInfoAWS.setEnabled(Integer.parseInt(item.get("enabled").getN()));
+		userInfoAWS.setUserstatus(item.get("userstatus").getS());
 		return userInfoAWS;
 	}
 }

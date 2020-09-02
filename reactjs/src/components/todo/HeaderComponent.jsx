@@ -25,8 +25,8 @@ class HeaderComponent extends Component {
             if(user !== null && userRole === null){
                 UserDataService.getUserDetail(user)
                         .then((response) => {
-                            sessionStorage.setItem(USER_ROLE, response.data)
-                            this.setState({ userrole: response.data })
+                            sessionStorage.setItem(USER_ROLE, response.data.role)
+                            this.setState({ userrole: response.data.role })
                         }).catch(() => {
                             sessionStorage.setItem(USER_ROLE, null)
                             this.setState({ userrole: '' })

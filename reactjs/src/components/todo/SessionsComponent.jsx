@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import SessionDataService from '../../api/todo/SessionDataService.js'
 import MaterialTable from 'material-table';
+import { USER_NAME_SESSION_ATTRIBUTE_NAME } from '../../Constants.js';
 
 class SessionsComponent extends Component {
     constructor(props) {
@@ -34,11 +35,11 @@ class SessionsComponent extends Component {
             )
     }
     
-    deleteSessionClicked(id) {
+    deleteSessionClicked(id, subject, classname) {
         SessionDataService.deleteSession(id)
             .then(
                 response => {
-                    this.setState({ message: `Delete of session ${id} Successful` })
+                    this.setState({ message: `${subject} session for class ${classname} has been deleted Successfully.` })
                     this.refreshSessions()
                 }
             )
@@ -57,6 +58,24 @@ class SessionsComponent extends Component {
         return fileUrl.substring((fileUrl.lastIndexOf('/')+1))        
     }
     render() {
+        let currentUser = sessionStorage.getItem(USER_NAME_SESSION_ATTRIBUTE_NAME)
+        if(currentUser === 'cpsclass1')
+            this.state.sessions =  this.state.sessions.filter(session => session.classname === 'Class 1')
+        if(currentUser === 'cpsclass2')
+            this.state.sessions =  this.state.sessions.filter(session => session.classname === 'Class 2')
+        if(currentUser === 'cpsclass3')
+            this.state.sessions =  this.state.sessions.filter(session => session.classname === 'Class 3')
+        if(currentUser === 'cpsclass4')
+            this.state.sessions =  this.state.sessions.filter(session => session.classname === 'Class 4')
+        if(currentUser === 'cpsclass5')
+            this.state.sessions =  this.state.sessions.filter(session => session.classname === 'Class 5')
+        if(currentUser === 'cpsclass6')
+            this.state.sessions =  this.state.sessions.filter(session => session.classname === 'Class 6')
+        if(currentUser === 'cpsclass7')
+            this.state.sessions =  this.state.sessions.filter(session => session.classname === 'Class 7')
+        if(currentUser === 'cpsclass8')
+            this.state.sessions =  this.state.sessions.filter(session => session.classname === 'Class 8')
+            
         return (
             <div >
                 <div className="container" style={{width: '75%'}}>
@@ -81,7 +100,7 @@ class SessionsComponent extends Component {
                         {
                         icon: 'delete',
                         tooltip: 'Delete Lession',
-                        onClick: (event, rowData) => this.deleteSessionClicked(rowData.id)
+                        onClick: (event, rowData) => this.deleteSessionClicked(rowData.id, rowData.subject, rowData.classname)
                         }
                     ]}
                     options={{

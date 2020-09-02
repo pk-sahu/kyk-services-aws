@@ -38,8 +38,8 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 		String username = null;
 		String jwtToken = null;
 		// JWT Token is in the form "Bearer token". Remove Bearer word and get only the Token
-		if (requestTokenHeader != null && requestTokenHeader.startsWith("Basic ")) {
-			jwtToken = requestTokenHeader.substring(6);
+		if (requestTokenHeader != null && requestTokenHeader.startsWith("Bearer ")) {
+			jwtToken = requestTokenHeader.substring(7);
 			try {
 				username = jwtTokenUtil.getUsernameFromToken(jwtToken);
 				// Once we get the token validate it.

@@ -58,7 +58,7 @@ class AssignmentComponent extends Component {
                                     <strong>{session.subject}</strong>: {session.description}<br/>
                                     <strong>Class</strong>: {session.classname}
                                 </h6>
-                                <video width='300px' height='120px' controls>
+                                <video width='300px' height='120px' controls controlsList='nodownload'>
                                     <source src={session.fileName} />    
                                 </video> 
                             </div><br />
@@ -77,7 +77,7 @@ class AssignmentComponent extends Component {
                                     <strong>{session.subject}</strong>: {session.description}<br />
                                     <strong>Class</strong>: {session.classname}
                                 </h6>
-                                <video width='300px' height='120px' controls>
+                                <video width='300px' height='120px' controls controlsList='nodownload'>
                                     <source src={session.fileName} />    
                                 </video> 
                             </div><br />

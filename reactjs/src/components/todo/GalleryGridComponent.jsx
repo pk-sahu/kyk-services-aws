@@ -79,16 +79,6 @@ class GalleryGridComponent extends Component {
                     options={{
                         actionsColumnIndex: -1
                     }}
-                    detailPanel={rowData => {
-                        return (
-                        <div style={{ padding: '10px 50px 10px 50px' }}>
-                            <video width='800px' height='200px' controls>
-                                <source src={rowData.fileName} />    
-                            </video> 
-                        </div>
-                        );
-                    }}
-                    onRowClick={(event, rowData, togglePanel) => togglePanel()}
                     />
                     {/* <div className="row" >
                         <button className="btn" style={{ backgroundColor: 'darkred', color: 'white' }}onClick={this.addClicked}>
